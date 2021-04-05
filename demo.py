@@ -90,10 +90,10 @@ if __name__ == '__main__':
         if frame is None:
             break
         input_scale = base_height / frame.shape[0]
-        scaled_img = cv2.resize(frame, dsize=None, fx=input_scale, fy=input_scale)
+        scaled_img = cv2.resize(frame, dsize=None, fx=input_scale, fy=input_scale) #height该固定为256
         scaled_img = scaled_img[:, 0:scaled_img.shape[1] - (scaled_img.shape[1] % stride)]  # better to pad, but cut out for demo
         if fx < 0:  # Focal length is unknown
-            fx = np.float32(0.8 * frame.shape[1])
+            fx = np.float32(0.8 * frame.shape[1]) # why 0.8 ??
 
         inference_result = net.infer(scaled_img)
         poses_3d, poses_2d = parse_poses(inference_result, input_scale, stride, fx, is_video)

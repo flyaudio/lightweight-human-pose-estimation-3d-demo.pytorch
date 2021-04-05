@@ -16,17 +16,18 @@ class Plotter3d:
                                [12, 13], [13, 14], [0, 1], [1, 15], [15, 16], [1, 17], [17, 18]])
 
     def __init__(self, canvas_size, origin=(0.5, 0.5), scale=1):
-        self.origin = np.array([origin[1] * canvas_size[1], origin[0] * canvas_size[0]], dtype=np.float32)  # x, y
+        self.origin = np.array([origin[1] * canvas_size[1], origin[0] * canvas_size[0]], dtype=np.float32)  # x, y;图像中心作为坐标原点
         self.scale = np.float32(scale)
         self.theta = 0
         self.phi = 0
         axis_length = 200
+        # 画坐标轴
         axes = [
-            np.array([[-axis_length/2, -axis_length/2, 0], [axis_length/2, -axis_length/2, 0]], dtype=np.float32),
+            np.array([[-axis_length/2, -axis_length/2, 0], [axis_length/2, -axis_length/2, 0]], dtype=np.float32),# x,y,z
             np.array([[-axis_length/2, -axis_length/2, 0], [-axis_length/2, axis_length/2, 0]], dtype=np.float32),
-            np.array([[-axis_length/2, -axis_length/2, 0], [-axis_length/2, -axis_length/2, axis_length]], dtype=np.float32)]
+            np.array([[-axis_length/2, -axis_length/2, 0], [-axis_length/2, -axis_length/2, axis_length]], dtype=np.float32)] #高度
         step = 20
-        for step_id in range(axis_length // step + 1):  # add grid
+        for step_id in range(axis_length // step + 1):  # add grid 网格
             axes.append(np.array([[-axis_length / 2, -axis_length / 2 + step_id * step, 0],
                                   [axis_length / 2, -axis_length / 2 + step_id * step, 0]], dtype=np.float32))
             axes.append(np.array([[-axis_length / 2 + step_id * step, -axis_length / 2, 0],
@@ -42,7 +43,7 @@ class Plotter3d:
             self._plot_edges(img, vertices, edges, R)
 
     def _draw_axes(self, img, R):
-        axes_2d = np.dot(self.axes, R)
+        axes_2d = np.dot(self.axes, R) #旋转坐标轴,右乘??
         axes_2d = axes_2d * self.scale + self.origin
         for axe in axes_2d:
             axe = axe.astype(int)
