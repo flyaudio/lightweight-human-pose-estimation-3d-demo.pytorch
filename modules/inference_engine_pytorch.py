@@ -26,8 +26,8 @@ class InferenceEnginePyTorch:
             net.load_state_dict(checkpoint)
         else:
             load_state(net, checkpoint)
-            net = net.to(self.device)
-        net.eval()
+            net = net.to(self.device) #use GPU
+        net.eval() #区别于train
         self.net = net
 
     def infer(self, img):

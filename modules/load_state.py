@@ -5,7 +5,7 @@ def load_state(net, checkpoint):
     source_state = checkpoint['state_dict']
     target_state = net.state_dict()
     new_target_state = collections.OrderedDict()
-    for target_key, target_value in target_state.items():
+    for target_key, target_value in target_state.items(): #字典遍历
         if target_key in source_state and source_state[target_key].size() == target_state[target_key].size():
             new_target_state[target_key] = source_state[target_key]
         else:
