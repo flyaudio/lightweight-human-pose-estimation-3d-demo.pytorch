@@ -13,7 +13,7 @@ def conv(in_channels, out_channels, kernel_size=3, padding=1, bn=True, dilation=
 def conv_dw(in_channels, out_channels, kernel_size=3, padding=1, stride=1, dilation=1):
     return nn.Sequential(
         nn.Conv2d(in_channels, in_channels, kernel_size, stride, padding, dilation=dilation, groups=in_channels, bias=False),
-        nn.BatchNorm2d(in_channels),
+        nn.BatchNorm2d(in_channels),#BN放在Relu前面
         nn.ReLU(inplace=True),
 
         nn.Conv2d(in_channels, out_channels, 1, 1, 0, bias=False),
@@ -21,8 +21,11 @@ def conv_dw(in_channels, out_channels, kernel_size=3, padding=1, stride=1, dilat
         nn.ReLU(inplace=True),
     )
 
-
 def conv_dw_no_bn(in_channels, out_channels, kernel_size=3, padding=1, stride=1, dilation=1):
+    '''
+    什么情况下不需要BN ??
+    https://github.com/Daniil-Osokin/lightweight-human-pose-estimation.pytorch/issues/27
+    '''
     return nn.Sequential(
         nn.Conv2d(in_channels, in_channels, kernel_size, stride, padding, dilation=dilation, groups=in_channels, bias=False),
         nn.ELU(inplace=True),

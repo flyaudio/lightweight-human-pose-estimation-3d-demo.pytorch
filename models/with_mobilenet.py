@@ -31,7 +31,7 @@ class InitialStage(nn.Module):
         )
         self.heatmaps = nn.Sequential(
             conv(num_channels, 512, kernel_size=1, padding=0, bn=False),
-            conv(512, num_heatmaps, kernel_size=1, padding=0, bn=False, relu=False)
+            conv(512, num_heatmaps, kernel_size=1, padding=0, bn=False, relu=False)#why disable bn & relu ??
         )
         self.pafs = nn.Sequential(
             conv(num_channels, 512, kernel_size=1, padding=0, bn=False),
