@@ -1,3 +1,7 @@
 *.pyc
 __pycache__
 .idea/
+*.jpg
+*.png
+*.pt
+*.pth

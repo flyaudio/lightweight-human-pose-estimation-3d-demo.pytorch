@@ -4,7 +4,7 @@ import torch
 
 class InferenceEnginePyTorch:
     def __init__(self, checkpoint_path, device,
-                 img_mean=np.array([128, 128, 128], dtype=np.float32),
+                 img_mean=np.array([128, 128, 128], dtype=np.float32),# ??why 128
                  img_scale=np.float32(1/255),
                  use_tensorrt=False):
         from models.with_mobilenet import PoseEstimationWithMobileNet

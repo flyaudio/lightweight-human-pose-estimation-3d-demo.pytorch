@@ -2,6 +2,7 @@ import cv2
 
 
 class ImageReader:
+    '''用迭代器的方式管理图片'''
     def __init__(self, file_names):
         self.file_names = file_names
         self.max_idx = len(file_names)
@@ -11,6 +12,7 @@ class ImageReader:
         return self
 
     def __next__(self):
+        '''是产生一个用一个,不用全部载入内存'''
         if self.idx == self.max_idx:
             raise StopIteration
         img = cv2.imread(self.file_names[self.idx], cv2.IMREAD_COLOR)
@@ -30,14 +32,17 @@ class VideoReader:
 
     def __iter__(self):
         self.cap = cv2.VideoCapture(self.file_name)
-        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+        # self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        # self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
         if not self.cap.isOpened():
             raise IOError('Video {} cannot be opened'.format(self.file_name))
         return self
 
     def __next__(self):
         was_read, img = self.cap.read()
+        # was_read, img = self.cap.retrieve()
         if not was_read:
             raise StopIteration
         return img

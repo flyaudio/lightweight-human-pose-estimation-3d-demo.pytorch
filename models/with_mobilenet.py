@@ -51,7 +51,7 @@ class RefinementStageBlock(nn.Module):
         self.initial = conv(in_channels, out_channels, kernel_size=1, padding=0, bn=False)
         self.trunk = nn.Sequential(
             conv(out_channels, out_channels),
-            conv(out_channels, out_channels, dilation=2, padding=2)
+            conv(out_channels, out_channels, dilation=2, padding=2) #dilated conv
         )
 
     def forward(self, x):
@@ -155,7 +155,7 @@ class PoseEstimationWithMobileNet(nn.Module):
             conv_dw(128, 256, stride=2),
             conv_dw(256, 256),
             conv_dw(256, 512),  # conv4_2
-            conv_dw(512, 512, dilation=2, padding=2),
+            conv_dw(512, 512, dilation=2, padding=2), #dilated conv
             conv_dw(512, 512),
             conv_dw(512, 512),
             conv_dw(512, 512),
